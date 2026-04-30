@@ -149,15 +149,34 @@ public class EjemploClosure {
 ## 8. Reflexiona: ¿en qué se diferencia entonces una función lambda de los punteros a funciones que hay en C?
 
 ### Respuesta
-
-
-## 9. Devolvamos ahora funciones. Creemos ahora una función que sea capaz de crear funciones "descuento". Una función "descuento", decrementa un porcentaje pasado como parámetro. Por simplicidad, usa `Function<Double, Double>` para su tipo. La función `crearDescuento(porcentaje)`, recibe solo el porcentaje de descuento a aplicar y devuelve la función de descuento. Prueba a crear dos descuentos distintos y aplicarlos a una cantidad. Explica la closure en la función descuento.
-
-### Respuesta
 Un puntero a función en C es simplemente una dirección de memoria que apunta a una función concreta; no encapsula ningún estado adicional ni información sobre el entorno en el que se utiliza. En cambio, una función lambda es una construcción de más alto nivel que representa un comportamiento completo, y que puede capturar variables del contexto donde se define, formando lo que se denomina un closure.
 
 Otra diferencia relevante es la integración con el sistema de tipos del lenguaje. En C, el uso de punteros a funciones es más flexible pero también más propenso a errores, ya que no existe un mecanismo que garantice comportamientos adicionales más allá de la signatura. En Java, las funciones lambda están ligadas a interfaces funcionales, lo que proporciona comprobación de tipos en tiempo de compilación, mejor legibilidad y una semántica más clara
 
+## 9. Devolvamos ahora funciones. Creemos ahora una función que sea capaz de crear funciones "descuento". Una función "descuento", decrementa un porcentaje pasado como parámetro. Por simplicidad, usa `Function<Double, Double>` para su tipo. La función `crearDescuento(porcentaje)`, recibe solo el porcentaje de descuento a aplicar y devuelve la función de descuento. Prueba a crear dos descuentos distintos y aplicarlos a una cantidad. Explica la closure en la función descuento.
+
+### Respuesta
+La función crearDescuento recibe un porcentaje y devuelve una función de tipo Function<Double, Double> que aplica ese descuento a una cantidad
+
+import java.util.function.Function;
+
+public class EjemploDescuento {
+
+    public static Function<Double, Double> crearDescuento(double porcentaje) {
+        return cantidad -> cantidad - (cantidad * porcentaje / 100);
+    }
+
+    public static void main(String[] args) {
+        Function<Double, Double> descuento10 = crearDescuento(10);
+        Function<Double, Double> descuento25 = crearDescuento(25);
+
+        double precio = 100.0;
+
+        System.out.println(descuento10.apply(precio)); // 90.0
+        System.out.println(descuento25.apply(precio)); // 75.0
+    }
+}
+``
 
 ## 10. En Java, que es un lenguaje con comprobación estática de tipos, donde los tipos se declaran, toda función lambda tiene un tipo, que se conoce como **interfaz funcional**. ¿Qué es una **interfaz funcional**? ¿Qué requisitos tiene?
 
